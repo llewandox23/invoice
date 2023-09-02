@@ -1,11 +1,13 @@
 package com.oreillys.pos.invoice.service.impl;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.oreillys.pos.invoice.entity.Invoice;
 import com.oreillys.pos.invoice.exception.ResourceNotFoundException;
 import com.oreillys.pos.invoice.payload.InvoiceData;
 import com.oreillys.pos.invoice.payload.InvoiceDto;
 import com.oreillys.pos.invoice.repository.InvoiceRepository;
 import com.oreillys.pos.invoice.service.InvoiceService;
+import com.oreillys.pos.invoice.utils.TenderTypeUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -40,6 +42,36 @@ public class InvoiceServiceImpl implements InvoiceService {
         List<Invoice> invoiceList = invoiceRepository.getInvoiceListByCustomerId(customerId);
         Map<Long, String> invoiceMap = invoiceList.stream().collect(Collectors.toMap(Invoice::getId, Invoice::getInvoiceData));
         return invoiceMap;
+    }
+
+    @Override
+    public Map<Long, String> getTenderTypeMapByCustomerId(long customerId) {
+        List<Invoice> invoiceList = invoiceRepository.getInvoiceListByCustomerId(customerId);
+        invoiceList.stream().forEach(inv -> System.out.println(inv.getCustomerId() + " - inv id: " + inv.getId()));
+        Map<Long, String> tenderMap = invoiceList.stream().collect(Collectors.toMap(Invoice::getId,
+                inv -> {
+                    try {
+                        return TenderTypeUtils.getTenderTypeFromInvoiceData(inv.getInvoiceData() );
+                    } catch (JsonProcessingException e) {
+                        throw new RuntimeException(e);
+                    }
+                }));
+        return tenderMap;
+    }
+
+    @Override
+    public Map<Long, String> getTenderTypeMapForCustomerList(List<Long> customerIds) {
+        List<Invoice> invoiceList = invoiceRepository.getInvoiceListForListOfCustomers(customerIds);
+        invoiceList.stream().forEach(inv -> System.out.println(inv.getCustomerId() + " - inv id: " + inv.getId()));
+        Map<Long, String> tenderMap = invoiceList.stream().collect(Collectors.toMap(Invoice::getId,
+                inv -> {
+                    try {
+                        return TenderTypeUtils.getTenderTypeFromInvoiceData(inv.getInvoiceData() );
+                    } catch (JsonProcessingException e) {
+                        throw new RuntimeException(e);
+                    }
+                }));
+        return tenderMap;
     }
 
     @Override

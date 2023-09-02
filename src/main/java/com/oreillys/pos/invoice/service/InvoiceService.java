@@ -10,6 +10,10 @@ import java.util.Map;
 public interface InvoiceService {
     Map<Long, String> getInvoiceMapByCustomerId(long customerId);
 
+    Map<Long, String> getTenderTypeMapByCustomerId(long customerId);
+
+    Map<Long, String> getTenderTypeMapForCustomerList(List<Long> customerIds);
+
     List<Invoice> getInvoiceListByCustomerId(long id);
     InvoiceDto getInvoiceById(long id);
 }

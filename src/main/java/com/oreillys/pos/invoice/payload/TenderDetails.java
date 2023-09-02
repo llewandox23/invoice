@@ -8,4 +8,5 @@ import java.math.BigDecimal;
 public class TenderDetails {
     private BigDecimal amount;
     private String type;
+
 }

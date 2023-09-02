@@ -2,11 +2,13 @@ package com.oreillys.pos.invoice;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.oreillys.pos.invoice.payload.InvoiceData;
 import com.oreillys.pos.invoice.payload.LocalTimeData;
 import com.oreillys.pos.invoice.payload.TenderDetails;
 import com.oreillys.pos.invoice.payload.TenderType;
+import com.oreillys.pos.invoice.utils.TenderTypeUtils;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
@@ -20,7 +22,7 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class TenderTypeTests {
 
@@ -48,6 +50,29 @@ public class TenderTypeTests {
         LocalTimeData localTimeData = new LocalTimeData();
         localTimeData.setTime(new Date());
         System.out.println("time " + localTimeData.getTime());
+    }
+
+    @Test
+    public void testTenderTypeMapper() throws JsonProcessingException {
+        String invoiceData = "{\"time\": 12:00, \"tenderDetails\": {\"amount\": 4.95, \"type\": \"cash\"}, \"storeNumber\": \"999\"}";
+        String tenderType = TenderTypeUtils.getTenderTypeFromInvoiceData(invoiceData);
+        assertEquals("cash", tenderType);
+    }
+
+    @Test
+    public void testTenderTypeMapperNotEqual() throws JsonProcessingException {
+        String invoiceData = "{\"time\": 12:00, \"tenderDetails\": {\"amount\": 4.95, \"type\": \"credit\"}, \"storeNumber\": \"999\"}";
+        String tenderType = TenderTypeUtils.getTenderTypeFromInvoiceData(invoiceData);
+        assertNotEquals("cash", tenderType);
+    }
+
+    @Test
+    public void testTenderTypeMapperError()  {
+        JsonProcessingException exception = assertThrows(JsonProcessingException.class, () -> {
+            String invoiceData = "{\"time\": 12:00, \"tenderDetails\": {\"amount\": 4.95, \"typo\": \"credit\"}, \"storeNumber\": \"999\"}";
+            String tenderType = TenderTypeUtils.getTenderTypeFromInvoiceData(invoiceData);
+        });
+        System.out.println(exception.getMessage());
     }
 
     @Test
