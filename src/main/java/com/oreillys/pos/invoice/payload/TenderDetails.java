@@ -7,5 +7,5 @@ import java.math.BigDecimal;
 @Data
 public class TenderDetails {
     private BigDecimal amount;
-    private TenderType type;
+    private String type;
 }

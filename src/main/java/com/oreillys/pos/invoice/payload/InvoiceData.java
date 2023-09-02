@@ -7,8 +7,7 @@ import java.util.Date;
 
 @Data
 public class InvoiceData {
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm")
-    private Date time;
+    private String time;
     private TenderDetails tenderDetails;
     private String storeNumber;
 

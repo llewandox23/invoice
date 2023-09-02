@@ -35,10 +35,10 @@ public class TenderTypeTests {
         BigDecimal money = new BigDecimal("25.43");
         TenderDetails td = new TenderDetails();
         td.setAmount(money);
-        td.setType(TenderType.CASH);
+        td.setType(TenderType.CASH.name());
         InvoiceData data = new InvoiceData();
         data.setTenderDetails(td);
-        data.setTime(new Date());
+//        data.setTime(new Date());
         data.setStoreNumber("999");
         System.out.println(data.toString());
     }
