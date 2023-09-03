@@ -1,5 +1,5 @@
 ### invoice
-<font size="2">
+<font size="1">
 Invoice data for O'Reilly Auto Parts  
 
 | **customer_id** | **invoice_id** |                                       **invoice_data**                                       |
