@@ -1,9 +1,6 @@
 package com.oreillys.pos.invoice;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.oreillys.pos.invoice.payload.InvoiceData;
 import com.oreillys.pos.invoice.payload.LocalTimeData;
 import com.oreillys.pos.invoice.payload.TenderDetails;
@@ -12,9 +9,6 @@ import com.oreillys.pos.invoice.utils.TenderTypeUtils;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
-import java.time.LocalTime;
-import java.time.OffsetTime;
-import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -40,7 +34,6 @@ public class TenderTypeTests {
         td.setType(TenderType.CASH.name());
         InvoiceData data = new InvoiceData();
         data.setTenderDetails(td);
-//        data.setTime(new Date());
         data.setStoreNumber("999");
         System.out.println(data.toString());
     }

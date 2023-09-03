@@ -8,11 +8,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.RequestEntity;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 public class RestApiCallTests {
@@ -45,5 +45,6 @@ public class RestApiCallTests {
         RequestEntity<Void> requestEntity = RequestEntity.get(resource).build();
         Map<Long, String> theMap = restTemplate.exchange(requestEntity, responseType).getBody();
         theMap.entrySet().stream().forEach(e -> System.out.println(e.getKey() + " - " + e.getValue()));
+        assertTrue(theMap.containsKey(56L));
     }
 }
