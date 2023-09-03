@@ -21,6 +21,10 @@ public class InvoiceController {
     public InvoiceController(InvoiceService invoiceService) {
         this.invoiceService = invoiceService;
     }
+    @GetMapping("/")
+    public String getHelloWorld() {
+        return "Hello World";
+    }
 
     @GetMapping("/customer/tender/{id}")
     public Map<Long, String> getInvoicesForCustomer(@PathVariable(name = "id") long id) {
