@@ -1,6 +1,8 @@
 package com.oreillys.pos.invoice.repository;
 
 import com.oreillys.pos.invoice.entity.Invoice;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

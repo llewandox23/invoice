@@ -28,7 +28,7 @@ public class InvoiceController {
     }
 
     @GetMapping("/{id}")
-    public InvoiceDto getInvoiceById(@PathVariable(name = "id") long id) {
+    public Invoice getInvoiceById(@PathVariable(name = "id") long id) {
         return invoiceService.getInvoiceById(id);
     }
 
@@ -47,6 +47,11 @@ public class InvoiceController {
         System.out.println("The List: " + customerIds);
         Map<Long, String> typeList = invoiceService.getTenderTypeMapForCustomerList(customerIds);
         return typeList;
+    }
+
+    @PostMapping("/insert")
+    public Long insertInvoice(@RequestBody Invoice invoice) {
+        return invoiceService.insertInvoice(invoice);
     }
 
 

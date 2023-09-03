@@ -15,5 +15,7 @@ public interface InvoiceService {
     Map<Long, String> getTenderTypeMapForCustomerList(List<Long> customerIds);
 
     List<Invoice> getInvoiceListByCustomerId(long id);
-    InvoiceDto getInvoiceById(long id);
+    Invoice getInvoiceById(long id);
+
+    Long insertInvoice(Invoice invoice);
 }

@@ -5,10 +5,10 @@ import com.oreillys.pos.invoice.entity.Invoice;
 import com.oreillys.pos.invoice.exception.ResourceNotFoundException;
 import com.oreillys.pos.invoice.payload.InvoiceData;
 import com.oreillys.pos.invoice.payload.InvoiceDto;
+import com.oreillys.pos.invoice.repository.InvoiceInsertRepository;
 import com.oreillys.pos.invoice.repository.InvoiceRepository;
 import com.oreillys.pos.invoice.service.InvoiceService;
 import com.oreillys.pos.invoice.utils.TenderTypeUtils;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -21,20 +21,23 @@ import java.util.stream.Collectors;
 public class InvoiceServiceImpl implements InvoiceService {
 
     private InvoiceRepository invoiceRepository;
-    private ModelMapper mapper;
+    private InvoiceInsertRepository invoiceInsertRepository;
 
-    public InvoiceServiceImpl(InvoiceRepository invoiceRepository, ModelMapper modelMapper) {
+    public InvoiceServiceImpl(InvoiceRepository invoiceRepository, InvoiceInsertRepository invoiceInsertRepository) {
         this.invoiceRepository = invoiceRepository;
-        this.mapper = modelMapper;
+        this.invoiceInsertRepository = invoiceInsertRepository;
     }
 
     @Override
-    public InvoiceDto getInvoiceById(long id) {
+    public Invoice getInvoiceById(long id) {
         Invoice invoice = invoiceRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Invoice", "id", String.valueOf(id)));
         System.out.println("invoice " + invoice);
-        InvoiceDto dto = mapToDTO(invoice);
-        System.out.println("invoiceDto " + dto.getId());
-        return dto;
+        return invoice;
+    }
+
+    @Override
+    public Long insertInvoice(Invoice invoice) {
+        return invoiceInsertRepository.insertInvoice(invoice);
     }
 
     @Override
@@ -81,13 +84,4 @@ public class InvoiceServiceImpl implements InvoiceService {
         return invoiceList;
     }
 
-    // convert entity to DTO
-    private InvoiceDto mapToDTO(Invoice invoice) {
-        return mapper.map(invoice, InvoiceDto.class);
-    }
-
-    // convert DTO to entity
-    private Invoice mapToEntity(InvoiceDto invoiceDto) {
-        return mapper.map(invoiceDto, Invoice.class);
-    }
 }
