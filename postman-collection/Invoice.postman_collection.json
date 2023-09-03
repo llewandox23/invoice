@@ -53,7 +53,7 @@
 			"response": []
 		},
 		{
-			"name": "customers",
+			"name": "tendertype/customers",
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -67,7 +67,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/invoice/customers",
+					"raw": "http://localhost:8080/api/invoice/tendertype/customers",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -76,6 +76,7 @@
 					"path": [
 						"api",
 						"invoice",
+						"tendertype",
 						"customers"
 					]
 				}
@@ -83,12 +84,12 @@
 			"response": []
 		},
 		{
-			"name": "customer/tender/1",
+			"name": "invoice/customer/1",
 			"request": {
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/invoice/customer/tender/1",
+					"raw": "http://localhost:8080/api/invoice/invoice/customer/1",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -97,8 +98,8 @@
 					"path": [
 						"api",
 						"invoice",
+						"invoice",
 						"customer",
-						"tender",
 						"1"
 					]
 				}
@@ -106,12 +107,12 @@
 			"response": []
 		},
 		{
-			"name": "customer/tender/2",
+			"name": "invoice/customer/2",
 			"request": {
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/invoice/customer/tender/2",
+					"raw": "http://localhost:8080/api/invoice/invoice/customer/2",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -120,8 +121,8 @@
 					"path": [
 						"api",
 						"invoice",
+						"invoice",
 						"customer",
-						"tender",
 						"2"
 					]
 				}

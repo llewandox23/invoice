@@ -27,9 +27,7 @@ class InvoiceApplicationTests {
 	@Autowired
 	InvoiceService invoiceService;
 
-	@Test
-	void contextLoads() {
-	}
+
 	// invoice 56 has type credit
 	@Test
 	public void testJsonToInvoice() throws JsonProcessingException {

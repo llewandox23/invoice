@@ -21,38 +21,72 @@ public class InvoiceController {
     public InvoiceController(InvoiceService invoiceService) {
         this.invoiceService = invoiceService;
     }
+
+    /**
+     * Just a simple GET test
+     */
     @GetMapping("/")
     public String getHelloWorld() {
         return "Hello World";
     }
 
-    @GetMapping("/customer/tender/{id}")
-    public Map<Long, String> getInvoicesForCustomer(@PathVariable(name = "id") long id) {
-        return invoiceService.getInvoiceMapByCustomerId(id);
+    /**
+     *
+     * @param customerId
+     * @return a map with key: invoiceId and value: Invoice object
+     */
+    @GetMapping("/invoice/customer/{customerId}")
+    public Map<Long, String> getInvoicesForCustomer(@PathVariable(name = "customerId") long customerId) {
+        return invoiceService.getInvoiceMapByCustomerId(customerId);
     }
 
-    @GetMapping("/{id}")
-    public Invoice getInvoiceById(@PathVariable(name = "id") long id) {
-        return invoiceService.getInvoiceById(id);
+    /**
+     *
+     * @param invoiceId
+     * @return the Invoice object for the given invoiceId
+     */
+    @GetMapping("/{invoiceId}")
+    public Invoice getInvoiceById(@PathVariable(name = "invoiceId") long invoiceId) {
+        return invoiceService.getInvoiceById(invoiceId);
     }
 
-    @GetMapping("/customer/{id}")
-    public List<Invoice> getInvoiceListByCustomerId(@PathVariable(name = "id") long customerId) {
+    /**
+     *
+     * @param customerId
+     * @return A list of Invoice objects for a giver customerId
+     */
+    @GetMapping("/customer/{customerId}")
+    public List<Invoice> getInvoiceListByCustomerId(@PathVariable(name = "customerId") long customerId) {
         return invoiceService.getInvoiceListByCustomerId(customerId);
     }
 
-    @GetMapping("/tendertype/customer/{id}")
-    public Map<Long, String> getTypeMapByCustomerId(@PathVariable(name = "id") long customerId) {
+    /**
+     *
+     * @param customerId
+     * @return a map with key: invoiceId and value: tenderType for a given customerId
+     */
+    @GetMapping("/tendertype/customer/{customerId}")
+    public Map<Long, String> getTypeMapByCustomerId(@PathVariable(name = "customerId") long customerId) {
         return invoiceService.getTenderTypeMapByCustomerId(customerId);
     }
 
-    @PostMapping("/customers")
+    /**
+     *
+     * @param customerIds a JSON list of customerIds
+     * @return a map with key: invoiceId and value: tenderType for all the customers in the list
+     */
+    @PostMapping("/tendertype/customers")
     public Map<Long, String> getTypeForListOfCustomers(@RequestBody List<Long> customerIds) {
         System.out.println("The List: " + customerIds);
         Map<Long, String> typeList = invoiceService.getTenderTypeMapForCustomerList(customerIds);
         return typeList;
     }
 
+    /**
+     *
+     * @param invoice -- Invoice object JSON formated for input
+     * @return the invoiceId of the inserted invoice
+     */
     @PostMapping("/insert")
     public Long insertInvoice(@RequestBody Invoice invoice) {
         return invoiceService.insertInvoice(invoice);
