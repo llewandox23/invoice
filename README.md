@@ -1,5 +1,5 @@
 ## invoice
-Given the Invoice data for O'Reilly Auto Parts  
+Given the Invoice data  
 
 | **customer_id** | **invoice_id** |                                       **invoice_data**                                       |
 |-----------------|:--------------:|:--------------------------------------------------------------------------------------------:|
